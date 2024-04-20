@@ -70,6 +70,10 @@ function HashMap() {
         }
     }
 
+    const length = () => {
+        return keyArr.length;
+    }
+
     const clear = () => {
         hashTable = [];
         keyArr = [];
