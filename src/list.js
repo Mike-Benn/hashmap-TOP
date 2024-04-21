@@ -15,18 +15,9 @@ function LinkedList() {
             head = node;
             tail = node;
             size = size + 1;
-        } else if (head.getNext() === null) {
-            head.setNext(node);
-            node.setLast(head);
-            tail = node;
-            size = size + 1;
         } else {
-            let current = head;
-            while (current.getNext() !== null) {
-                current = current.getNext();
-            }
-            current.setNext(node);
-            node.setLast(current);
+            tail.setNext(node);
+            node.setLast(tail);
             tail = node;
             size = size + 1;
         }
@@ -181,7 +172,7 @@ function LinkedList() {
             console.log(output);
         }
     }
-
+    
     return {
         append,
         prepend,
