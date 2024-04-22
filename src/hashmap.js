@@ -10,7 +10,7 @@ function HashMap() {
     const LOAD_FACTOR_LIMIT = 0.70;
     
     
-
+    const getSize = () => size;
     // Takes a key and produces a hash code with it
     const hash = (key) => {
         let hashCode = 0;
@@ -32,19 +32,22 @@ function HashMap() {
         return false;
     }
 
+
+    // Increases the size of the hash table if the load factor becomes too great
     const resize = () => {
         let keyArrCopy = keyArr;
         let valArrCopy = valArr;
-        clear();
         size = size * 2;
-        for (let i = 0; i < totalElements; i++) {
+        let totalElementsCopy = totalElements;
+        clear();
+        for (let i = 0; i < totalElementsCopy; i++) {
             set(keyArrCopy[i] , valArrCopy[i])
         }
     }
 
     // Takes a key and value and assigns a node at the hashCode index in the hashTable
     const set = (key , value) => {
-        hashCode = hash(key);
+        let hashCode = hash(key);
         let list = hashTable[hashCode];
 
         if (list === undefined) {
@@ -70,6 +73,7 @@ function HashMap() {
                 totalElements = totalElements + 1;
                 keyArr.push(key);
                 valArr.push(value);
+                
             }
 
         }
@@ -82,7 +86,7 @@ function HashMap() {
 
     // Returns the value that is assigned to the key 
     const getKeyValue = (key) => {
-        hashCode = hash(key);
+        let hashCode = hash(key);
         let list = hashTable[hashCode];
 
 
@@ -104,7 +108,7 @@ function HashMap() {
 
     // Returns true or false based on whether or not the key is in the hash map
     const hasKey = (key) => {
-        hashCode = hash(key);
+        let hashCode = hash(key);
         let list = hashTable[hashCode];
 
         if (list === undefined) {
@@ -124,12 +128,12 @@ function HashMap() {
 
     // Returns the number of stored keys in the hash map
     const length = () => {
-        return keyArr.length;
+        return totalElements;
     }
 
     // Removes the given key if it exists in the hash map and returns true, returns false otherwise
     const remove = (key) => {
-        hashCode = hash(key);
+        let hashCode = hash(key);
         let list = hashTable[hashCode];
         
 
@@ -151,6 +155,7 @@ function HashMap() {
         hashTable = [];
         keyArr = [];
         valArr = [];
+        totalElements = 0;
 
 
         
@@ -225,7 +230,8 @@ function HashMap() {
         clear,
         keys,
         values,
-        entries
+        entries,
+        getSize
     }
     
 
