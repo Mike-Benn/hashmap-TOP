@@ -216,7 +216,16 @@ function HashMap() {
     }
     
     return {
-
+        hash,
+        set,
+        getKeyValue,
+        hasKey,
+        length,
+        remove,
+        clear,
+        keys,
+        values,
+        entries
     }
     
 
