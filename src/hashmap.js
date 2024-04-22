@@ -3,14 +3,24 @@ import { Node } from "./node";
 
 function HashMap() {
     let size = 23;
+    let totalElements = 0;
     let hashTable = [];
     let keyArr = [];
     let valArr = [];
+    const LOAD_FACTOR_LIMIT = 0.70;
+    
+    // Checks if the load factor limit of the hash table has been reached
+    const loadFactorCheck = () => {
+        if ((totalElements / size) >= LOAD_FACTOR_LIMIT) {
+            return true;
+        }
+        return false;
+    }
 
     // Takes a key and produces a hash code with it
     const hash = (key) => {
         let hashCode = 0;
-        const prime = 31;
+        const primeNumber = size;
 
         for (let i = 0; i < key.length; i++) {
             hashCode = primeNumber * hashCode + key.charCodeAt(i);
@@ -29,6 +39,7 @@ function HashMap() {
             let newList = LinkedList();
             newList.append(key , value);
             hashTable[hashCode] = newList;
+            totalElements = totalElements + 1;
         } else {
             let currNode = list.getHead();
             let duplicateKey = false;
@@ -42,6 +53,7 @@ function HashMap() {
             }
             if (duplicateKey === false) {
                 list.append(key , value);
+                totalElements = totalElements + 1;
             }
         }
 
@@ -104,8 +116,13 @@ function HashMap() {
         if (list === undefined) {
             return false;
         } else {
-            return list.remove(key);
-            
+            let result = list.remove(key);
+            if (result === true) {
+                totalElements = totalElements - 1;
+                updateArrays(key);
+                return result;
+            }
+            return result;
         }
     }
 
@@ -114,6 +131,7 @@ function HashMap() {
         hashTable = [];
         keyArr = [];
         valArr = [];
+        totalElements = 0;
     }
 
     
