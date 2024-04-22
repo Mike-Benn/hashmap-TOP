@@ -1,5 +1,5 @@
 import { LinkedList } from "./list";
-import { Node } from "./node";
+export { HashMap };
 
 function HashMap() {
     let size = 23;
@@ -14,7 +14,7 @@ function HashMap() {
     // Takes a key and produces a hash code with it
     const hash = (key) => {
         let hashCode = 0;
-        const primeNumber = size;
+        const primeNumber = 31;
 
         for (let i = 0; i < key.length; i++) {
             hashCode = primeNumber * hashCode + key.charCodeAt(i);
