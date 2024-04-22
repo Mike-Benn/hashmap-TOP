@@ -9,13 +9,7 @@ function HashMap() {
     let valArr = [];
     const LOAD_FACTOR_LIMIT = 0.70;
     
-    // Checks if the load factor limit of the hash table has been reached
-    const loadFactorCheck = () => {
-        if ((totalElements / size) >= LOAD_FACTOR_LIMIT) {
-            return true;
-        }
-        return false;
-    }
+    
 
     // Takes a key and produces a hash code with it
     const hash = (key) => {
@@ -30,6 +24,24 @@ function HashMap() {
         return hashCode;
     }
 
+    // Checks if the load factor limit of the hash table has been reached
+    const loadFactorCheck = () => {
+        if ((totalElements / size) >= LOAD_FACTOR_LIMIT) {
+            return true;
+        }
+        return false;
+    }
+
+    const resize = () => {
+        let keyArrCopy = keyArr;
+        let valArrCopy = valArr;
+        clear();
+        size = size * 2;
+        for (let i = 0; i < totalElements; i++) {
+            set(keyArrCopy[i] , valArrCopy[i])
+        }
+    }
+
     // Takes a key and value and assigns a node at the hashCode index in the hashTable
     const set = (key , value) => {
         hashCode = hash(key);
@@ -40,6 +52,8 @@ function HashMap() {
             newList.append(key , value);
             hashTable[hashCode] = newList;
             totalElements = totalElements + 1;
+            keyArr.push(key);
+            valArr.push(value);
         } else {
             let currNode = list.getHead();
             let duplicateKey = false;
@@ -54,7 +68,13 @@ function HashMap() {
             if (duplicateKey === false) {
                 list.append(key , value);
                 totalElements = totalElements + 1;
+                keyArr.push(key);
+                valArr.push(value);
             }
+
+        }
+        if (loadFactorCheck()) {
+            resize();
         }
 
     }
@@ -131,7 +151,9 @@ function HashMap() {
         hashTable = [];
         keyArr = [];
         valArr = [];
-        totalElements = 0;
+
+
+        
     }
 
     
@@ -193,7 +215,9 @@ function HashMap() {
         return output;
     }
     
+    return {
 
+    }
     
 
 }
